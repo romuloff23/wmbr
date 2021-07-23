@@ -1,0 +1,29 @@
+{
+    "name": "romulo/wmbr",
+    "description": "projeto para demonstração de conhecimaneto",
+    "authors": [
+        {
+            "name": "Rômulo Farias",
+            "email": "romuloff23@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\":"App/"
+        },
+        "files": [
+            "config.php",
+            "App/Services/Wmbr_api.php",
+            "App/Services/NotificacaoServices.php",
+            "App/Models/Notificacao.php",
+            "App/Services/Home.php"
+        ],
+        "classmap": [
+            "App/Services/Wmbr_api.php",
+            "App/Services/NotificacaoServices.php",
+            "App/Models/Notificacao.php",
+            "App/Services/Home.php"
+        ]
+    },
+    "require": {}
+}
