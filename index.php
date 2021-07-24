@@ -1,8 +1,7 @@
 <?php
-require_once "vendor/autoload.php";
-use App\Wmbr_api\WMBR_API;
-use App\NotificacaoService\NotificacaoService;
-use App\Home\Home;
+    require_once "vendor/autoload.php";
+    use App\WmbrServices\WmbrServices;
+    use App\Home\Home;
 
 
     if($_GET['url']){
@@ -22,14 +21,8 @@ use App\Home\Home;
             echo"404<br>";
         }
     }else{
-        $teste = new WMBR_API;
-        //$teste->StatusSefaz();
-        $teste->emitirNota();
-        //$teste->consultarNota();
-        //$teste->cancelarNota();
-        //$teste->validadeA1();
-        //$pagina = new Home();
-        //$pagina->show();
+        $pagina = new Home();
+        $pagina->show();
     }
     
 

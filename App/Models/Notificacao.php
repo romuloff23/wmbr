@@ -7,15 +7,14 @@
         public static function insarteNotificacao($mensagem){
           
             $connPdo = new \PDO(DBDRIVE.':host='.DBHOST.'; dbname='.DBNAME, DBUSER, DBPASS);
-            $sql = "INSERT INTO notificacao (mensagem) VALUE( :mensagem)";
+            $sql = "INSERT INTO ".self::$tabela." (mensagem) VALUE( :mensagem)";
             $stmt = $connPdo->prepare($sql);
             $stmt->bindParam(':mensagem',$mensagem);
             if($stmt->execute()){
-                echo("Registro adicionado com sucesso!!!") ;
-           }else{
-               echo("Error ao adicionar novo registro: ");
-               print_r($stmt->errorInfo());
-           }
+                return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            }else{
+                throw new \Exception("Erro ao salvar dados!");
+            }
         }
 
         public static function selectAll(){

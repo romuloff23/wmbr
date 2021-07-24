@@ -13,16 +13,20 @@
         },
         "files": [
             "config.php",
-            "App/Services/Wmbr_api.php",
-            "App/Services/NotificacaoServices.php",
+            "App/Models/Wmbr_api.php",
             "App/Models/Notificacao.php",
-            "App/Services/Home.php"
+            "App/Models/NotasGeradas.php",
+            "App/Services/NotificacaoServices.php",
+            "App/Services/Home.php",
+            "App/Services/WmbrServices.php"
         ],
         "classmap": [
-            "App/Services/Wmbr_api.php",
-            "App/Services/NotificacaoServices.php",
+            "App/Models/Wmbr_api.php",
             "App/Models/Notificacao.php",
-            "App/Services/Home.php"
+            "App/Models/NotasGeradas.php",
+            "App/Services/NotificacaoServices.php",
+            "App/Services/Home.php",
+            "App/Services/WmbrServices.php"
         ]
     },
     "require": {}

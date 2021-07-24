@@ -1,6 +1,6 @@
 <?php
     namespace App\Wmbr_api;
-
+    
     class WMBR_API {
         private $erro = false;
         private $resultado;
@@ -20,29 +20,26 @@
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_POST, $post);
             curl_setopt($ch,CURLOPT_HTTPHEADER,$auth);
-            if(is_array($dado)){
+            curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+            if(is_array($dado)){ //caso aja dado a ser enviado
                 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($dado));
             }
-            if($put){
+            if($put){ //se for via PUT
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST,  'PUT');
             }
-            $response = curl_exec($ch);
+            $response = json_decode(curl_exec($ch),true);
             if (curl_errno($ch)) {
                 $this->erro = true;
                 $this->resultado = curl_error($ch);
             }else{
                 $this->erro = false;
-                $this->resultado = json_decode($response);
+                $this->resultado = $response;
             }
         }
 
         public function StatusSefaz(){
             $this->request('1/nfe/sefaz/',null,false,false);
-            if(!$this->erro){
-                return $this->resultado;
-            }else{
-                return "erro inesperado";
-            }
+            return $this->getResultado();
         }
 
         public function emitirNota(){
@@ -147,42 +144,33 @@
                 )
             );
             $this->request('1/nfe/emissao/',$dado,true,false);
-            if(!$this->erro){
-                return $this->resultado;
-            }else{
-                return "erro inesperado";
-            }
+            return $this->getResultado();
         }
-        public function consultarNota(){
-            $uuid = array('uuid'=> 'da74b795-fbe6-439e-b70b-d1b9d058b050');
+        public function consultarNota($uuid){
+            $uuid = array('uuid'=> $uuid);
             $this->request('1/nfe/consulta/',$uuid,false,false);
-            if(!$this->erro){
-                return $this->resultado;
-            }else{
-                return "erro inesperado";
-            }
+            return $this->getResultado();
         }
-        public function cancelarNota(){
+        public function cancelarNota($chave){
             $dado =  array(
-                "chave"=> "00000000000000000000000000000000000000000000", 
+                "chave"=> $chave, 
                 "motivo"=> "Cancelamento por motivos administrativos."
             );
             $this->request('1/nfe/cancelar/',$dado,false,true);
-            if(!$this->erro){
-                return $this->resultado;
-            }else{
-                return "erro inesperado";
-            }
+            return $this->getResultado();
         }
 
         public function validadeA1(){
             //1/nfe/certificado/
             $this->request('1/nfe/certificado/',null,false,false);
+            return $this->getResultado();
+        }
+        
+        private function getResultado(){
             if(!$this->erro){
                 return $this->resultado;
             }else{
-                return "erro inesperado";
+                throw new \Exception ("erro inesperado ao consumir API");
             }
         }
-
     }

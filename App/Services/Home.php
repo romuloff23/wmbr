@@ -12,14 +12,18 @@
         }
 
         public function load(){
-            
+            $head = '';
+            $menu = '';
             try{
-                
-                $this->html = str_replace('{Titulo}',$this->titulo,$this->html);
+                $head = file_get_contents('App/View/partes/head.html');
+                $menu = file_get_contents('App/View/partes/menu.html');
             }catch (\Exception $e) {
                 print $e->getMessage();
             }
-            
+            $head = str_replace('{Titulo}',$this->titulo,$head);
+            $this->html = str_replace('{Titulo}',$this->titulo,$this->html);
+            $this->html = str_replace('{head}',$head,$this->html);
+            $this->html = str_replace('{menu}',$menu, $this->html );
         }
 
         public function show(){
