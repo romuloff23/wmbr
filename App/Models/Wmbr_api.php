@@ -2,12 +2,29 @@
     namespace App\Wmbr_api;
     
     class WMBR_API {
+        /**
+        *   Esta classe se comunica diretamente com a API,
+        *   Fazendo as solicitações e retornado seus dados.
+        *
+        *
+        *   @author Rômulo F. Farias <romuloff23@gmail.com>
+        *   @access private
+        */
+
         private $erro = false;
         private $resultado;
 
-        public function request($endpoint='',$dado,$post,$put){
+        /** 
+        * Metodo generico para envio das solicitações a API
+        * @access private 
+        * @param string $endpoint
+        * @param array $dado
+        * @param bool $post
+        * @param bool $put
+        * @return array 
+        */
+        private function request($endpoint='',$dado,$post,$put){
             $url = URL . $endpoint;
-            //curl_setopt($ch, CURLOPT_CUSTOMREQUEST,  'PUT');
             $ch = curl_init();
             $auth = array(
                 'Cache-Control: no-cache',
@@ -36,11 +53,22 @@
                 $this->resultado = $response;
             }
         }
-
+        /** 
+        * Metodo para verificar o status da Sefaz
+        * @access public 
+        * @return array 
+        */
         public function StatusSefaz(){
             $this->request('1/nfe/sefaz/',null,false,false);
             return $this->getResultado();
         }
+
+        /** 
+        * Metodo emissão de nota fiscal, os dados estão estaticos
+        * por conta disso, este metodo não esta recebendo parametro.
+        * @access public 
+        * @return array 
+        */
 
         public function emitirNota(){
             $dado = array(
@@ -146,11 +174,29 @@
             $this->request('1/nfe/emissao/',$dado,true,false);
             return $this->getResultado();
         }
+
+        /** 
+        * Metodo para consulta a nota fiscal
+        * 
+        * @access public 
+        * @param string $uuid
+        * @return array 
+        */
+
         public function consultarNota($uuid){
             $uuid = array('uuid'=> $uuid);
             $this->request('1/nfe/consulta/',$uuid,false,false);
             return $this->getResultado();
         }
+        
+        /** 
+        * Metodo para cancelamento da nota fiscal
+        * 
+        * @access public 
+        * @param string $chave
+        * @return array 
+        */
+
         public function cancelarNota($chave){
             $dado =  array(
                 "chave"=> $chave, 
@@ -160,12 +206,26 @@
             return $this->getResultado();
         }
 
+        /** 
+        * Metodo para verificar credenciais
+        * 
+        * @access public 
+        * @return array 
+        */
+
         public function validadeA1(){
-            //1/nfe/certificado/
             $this->request('1/nfe/certificado/',null,false,false);
             return $this->getResultado();
         }
         
+        /** 
+        * Metodo interno da classe
+        * 
+        * @access private 
+        * @internal metodo de tratamento de erro
+        * @return array 
+        */
+
         private function getResultado(){
             if(!$this->erro){
                 return $this->resultado;
@@ -173,4 +233,5 @@
                 throw new \Exception ("erro inesperado ao consumir API");
             }
         }
+        
     }

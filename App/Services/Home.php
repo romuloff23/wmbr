@@ -2,7 +2,16 @@
     namespace App\Home; 
 
     class Home {
-       
+       /**
+        *   Esta classe é responsavel por exibir o menu
+        *   inicial da aplicação, ele é chamado quando a
+        *   URL da aplicação estiver vazia.
+        *
+        *
+        *   @author Rômulo F. Farias <romuloff23@gmail.com>
+        *   @access public
+        */
+
         private $titulo;
         private $html;
 

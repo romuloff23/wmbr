@@ -1,4 +1,14 @@
 <?php
+
+    /**
+    *   Este arquivo é responsavel por gerencia a exibição das
+    *   informações e navegação do sistema com base na URL.
+    *
+    *
+    *   @author Rômulo F. Farias <romuloff23@gmail.com>
+    *   @access public
+    */
+
     require_once "vendor/autoload.php";
     use App\WmbrServices\WmbrServices;
     use App\Home\Home;

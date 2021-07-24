@@ -1,9 +1,22 @@
 <?php
+
+    
+
     namespace App\WmbrServices;
     use App\Wmbr_api\WMBR_API;
     use App\NotasGeradas\NotasGeradas;
 
     class WmbrServices{
+
+        /**
+        *   Esta classe é responsavel por se comunicar com os modeuls,
+        *   tratar os dados e exibir na tela.
+        *
+        *
+        *   @author Rômulo F. Farias <romuloff23@gmail.com>
+        *   @access public
+        */
+
         private $uuid;
         private $chave;
         private $wmbr_api;
@@ -57,10 +70,12 @@
 
         public function consultarNota(){
             try{
+                $this->uuid = $_GET['uuid'];
                 $a = $this->wmbr_api->consultarNota($this->uuid);
                 $id = $this->ng->consultarChave($this->chave);
                 $this->ng->updateStatus($id['id'],$a["status"]);
-                
+                $this->alerta("Status da nota: ".$a["status"]);
+                $this->tabela();
             }catch(\Exception $e){
                 echo $e;
             }
