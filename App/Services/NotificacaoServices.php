@@ -14,7 +14,6 @@
         function show(){
 
             if(isset($_POST['uuid'])){
-    
                 $mensagem = 'UUID'.$_POST['uuid'].
                 ' status '.$_POST['status'].
                 ' motivo '.$_POST['motivo'].
